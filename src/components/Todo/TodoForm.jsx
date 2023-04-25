@@ -1,24 +1,45 @@
 import styles from './TodoForm.module.scss';
 import React, { useState } from 'react';
 
-export function TodoForm({onSetIsAddMode}) {
+// TodoForm => call in 2 Mode
+// Mode-1 : Add 
+// Mode-2 : Edit
+export function TodoForm({onSetIsShowForm,submitText, oldTask}) {
     // # 1 : Logic Section
-    const [task, setTask] = useState('');
+    const [task, setTask] = useState(oldTask || '');
+    const [isError,setIsError] = useState(false)
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Submit');
-		onSetIsAddMode(false)
+
+        // validate
+        if(task.trim() === '') {
+            setIsError(true)
+            return;
+        }
+
+        // set back to normal mode
+		onSetIsShowForm(false)
+	
     };
     const handleClickCancel = (e) => {
-        console.log('cancel');
-		onSetIsAddMode(false)
+        // from <AddTodo/> for Add
+		// onSetIsAddMode?.(false)
+        // from <TodoItem/> for Edit
+        // onSetIsEditMode?.(false)
+
+        // for Add , for Edit
+        onSetIsShowForm(false)
+	
+
     };
 
     const handleChangeInput = (e) => {
-        console.log(e.target.value);
+        setIsError(false)
 		setTask(e.target.value)
     };
+
+ 
 
     // # 2 : UI-Section
     return (
@@ -30,14 +51,16 @@ export function TodoForm({onSetIsAddMode}) {
                 onChange={handleChangeInput}
             />
             <div className={styles.todo__form__footer}>
-                <p className={styles.todo__error}>Title is required</p>
+               {isError &&  <p className={styles.todo__error}>Task Name is required</p>}
                 <div className={styles.todo__form__buttons}>
                     <button type='button' onClick={handleClickCancel}>
                         Cancel
                     </button>
-                    <button type='submit'>Add Task</button>
+                    <button type='submit'>{submitText}</button>
                 </div>
             </div>
+
         </form>
     );
 }
+
