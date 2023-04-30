@@ -3,16 +3,16 @@ $grey: rgb(234, 234, 234);
 $sidebar-width: 300px;
 $header-height: 44px;
 
-li {
-    list-style: none;
-}
+/* APP CLASS */
 
+// ## APP LAYOUT
 .container {
     display: grid;
     grid-template-rows: $header-height calc(100vh - $header-height);
     grid-template-columns: $sidebar-width calc(100vw - $sidebar-width);
 }
 
+// ## APP BAR,Nav BAR
 .header {
     background-color: $primary;
     grid-column: 1/3; // start/end
@@ -31,8 +31,43 @@ li {
         font-size: 24px;
         // align-items: center;
     }
+    & > h3 {
+        flex: 1;
+    }
 }
 
+// ## Search Bar
+.header__search__container {
+    width: 300px;
+    position: relative;
+
+    border-radius: 4px;
+    // display: flex;
+}
+.header__search__icon {
+    position: absolute;
+    display: flex;
+    font-size: 16px;
+    font-weight: 200;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: grey;
+}
+.header__search__input {
+    width: 100%;
+    padding: 5px;
+    padding-left: 30px;
+    border-radius: 5px;
+    border: 1px solid #e8e8e8;
+    // border: none;
+    font-size: 16px;
+    outline: none;
+
+    color: gray;
+}
+
+// ## SIDEBAR
 .sidebar {
     // background-color: aquamarine;
     grid-row: 2/3;
@@ -93,9 +128,11 @@ li {
     background-color: $grey;
 }
 
+// ## TODO DISPLAY
 .content {
     grid-row: 2/3;
     grid-column: 2/3;
     overflow-y: scroll;
     padding: 20px 30px;
+    padding-top: 0;
 }
